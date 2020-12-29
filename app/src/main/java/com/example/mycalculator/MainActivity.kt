@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
             // TODO: no more than one dot
             R.id.buDot -> {
-
                 if(!s!!.contains('.')) s += "."
                 display.text = s
             }
