@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:background="@color/EerieBlack"
         android:ems="10"
-        android:gravity="right"
+        android:gravity="left"
         android:inputType="textPersonName"
         android:paddingLeft="10pt"
         android:paddingTop="10pt"
