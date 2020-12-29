@@ -10,7 +10,7 @@ import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
 
-    var s: String = "0"
+    var s: String = ""
     val ops: String = "+-*/"
     lateinit var display: TextView
 
@@ -53,41 +53,51 @@ class MainActivity : AppCompatActivity() {
             display.text = s
         }
         one.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "1"
             display.text = s
         }
         two.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "2"
             display.text = s
         }
         three.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "3"
             display.text = s
         }
         four.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "4"
             display.text = s
         }
         five.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "5"
             display.text = s
         }
         six.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "6"
             display.text = s
         }
         seven.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "7"
             display.text = s
         }
         eight.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "8"
             display.text = s
         }
         nine.setOnClickListener{
+            if(s == "0") s?.dropLast(1)
             s += "9"
             display.text = s
         }
+
         dot.setOnClickListener{ // TODO: no more than one dot
             var lst: Int = 0
             lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
@@ -177,10 +187,9 @@ class MainActivity : AppCompatActivity() {
         plus = findViewById<Button>(R.id.buPlus)
         plusMinus = findViewById<Button>(R.id.buPlusMinus)
     }
-
     fun others(){
-        percent = findViewById<Button>(R.id.buPlus)
-        delete = findViewById<Button>(R.id.buPlusMinus)
+        percent = findViewById<Button>(R.id.buPercent)
+        delete = findViewById<Button>(R.id.buAC)
     }
 
     fun solve(s: String): Double{
