@@ -6,128 +6,187 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import java.lang.Exception
+import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
-    
-    var display: TextView = findViewById(R.id.outText)
+
     var s: String = "0"
-    
+    val ops: String = "+-*/"
+    lateinit var display: TextView
+
+    lateinit var zero: Button
+    lateinit var one: Button
+    lateinit var two: Button
+    lateinit var three: Button
+    lateinit var four: Button
+    lateinit var five: Button
+    lateinit var six: Button
+    lateinit var seven: Button
+    lateinit var eight: Button
+    lateinit var nine: Button
+    lateinit var dot: Button
+
+    lateinit var res: Button
+    lateinit var divide: Button
+    lateinit var multiply: Button
+    lateinit var minus: Button
+    lateinit var plus: Button
+    lateinit var plusMinus: Button
+
+    lateinit var percent: Button
+    lateinit var delete: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
+        display = findViewById(R.id.outText)
         display.text = s // initially
+
+        NumericalButtons()
+        OperationButtons()
+        others()
+
+        // NumericalButtons()
+        zero.setOnClickListener{ // TODO: I don't want leading zeroes
+            if(s!![s!!.length-1] != '0') s += "0"
+            display.text = s
+        }
+        one.setOnClickListener{
+            s += "1"
+            display.text = s
+        }
+        two.setOnClickListener{
+            s += "2"
+            display.text = s
+        }
+        three.setOnClickListener{
+            s += "3"
+            display.text = s
+        }
+        four.setOnClickListener{
+            s += "4"
+            display.text = s
+        }
+        five.setOnClickListener{
+            s += "5"
+            display.text = s
+        }
+        six.setOnClickListener{
+            s += "6"
+            display.text = s
+        }
+        seven.setOnClickListener{
+            s += "7"
+            display.text = s
+        }
+        eight.setOnClickListener{
+            s += "8"
+            display.text = s
+        }
+        nine.setOnClickListener{
+            s += "9"
+            display.text = s
+        }
+        dot.setOnClickListener{ // TODO: no more than one dot
+            var lst: Int = 0
+            lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
+            if(!s!!.substring(lst, s.length-1).contains('.')) s += "."
+            display.text = s
+        }
+
+        // OperationButtons()
+        // TODO: no two consecutive elements are operators
+        plus.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.')
+                s?.dropLast(1)
+            s += "+"
+            display.text = s
+        }
+        minus.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.')
+                s?.dropLast(1)
+
+            s += "-"
+            display.text = s
+        }
+        multiply.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.')
+                s?.dropLast(1)
+
+            s += "*"
+            display.text = s
+        }
+        divide.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.')
+                s?.dropLast(1)
+
+            s += "/"
+            display.text = s
+        }
+
+        res.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.') s?.dropLast(1)
+
+            try{
+                s = solve(s!!).toString()
+                display.text = s
+            }catch (e: Exception){
+                display.text = "Error"
+            }
+            // s = "0"
+        }
+
+        // others()
+        percent.setOnClickListener{
+            if(ops.contains(s!!.last()) || s!!.last()=='.')
+                s?.dropLast(1)
+
+            s += "/100"
+            display.text = s
+        }
+        delete.setOnClickListener{
+            if(s!!.isNotEmpty())
+                s?.dropLast(1)
+            if(s.isEmpty())
+                s = "0"
+            display.text = s
+        }
+
+        // a4tar katkot :D
     }
 
-    fun buttonEvent(view: View?){
+    fun NumericalButtons(){
+        zero = findViewById(R.id.bu0)
+        one = findViewById(R.id.bu1)
+        two = findViewById(R.id.bu2)
+        three = findViewById(R.id.bu3)
+        four = findViewById(R.id.bu4)
+        five = findViewById(R.id.bu5)
+        six = findViewById(R.id.bu6)
+        seven = findViewById(R.id.bu7)
+        eight = findViewById(R.id.bu8)
+        nine = findViewById(R.id.bu9)
+        dot = findViewById(R.id.buDot)
+    }
+    fun OperationButtons(){
+        res = findViewById<Button>(R.id.buResult)
+        divide = findViewById<Button>(R.id.buDivide)
+        multiply = findViewById<Button>(R.id.buMultiply)
+        minus = findViewById<Button>(R.id.buMinus)
+        plus = findViewById<Button>(R.id.buPlus)
+        plusMinus = findViewById<Button>(R.id.buPlusMinus)
+    }
 
-        var ops: String = "+-*/"
-        var clicked = view as Button
-
-        when(clicked.id){
-            R.id.bu0 -> {
-                // TODO: I don't want leading zeroes
-                if(s!![s!!.length-1] != '0') s += "0"
-                display.text = s
-            }
-            R.id.bu1 -> {
-                s += "1"
-                display.text = s
-            }
-            R.id.bu2 -> {
-                s += "2"
-                display.text = s
-            }
-            R.id.bu3 -> {
-                s += "3"
-                display.text = s
-            }
-            R.id.bu4 -> {
-                s += "4"
-                display.text = s
-            }
-            R.id.bu5 -> {
-                s += "5"
-                display.text = s
-            }
-            R.id.bu6 -> {
-                s += "6"
-                display.text = s
-            }
-            R.id.bu7 -> {
-                s += "7"
-                display.text = s
-            }
-            R.id.bu8 -> {
-                s += "8"
-                display.text = s
-            }
-            R.id.bu9 -> {
-                s += "9"
-                display.text = s
-            }
-
-            // TODO: no more than one dot
-            R.id.buDot -> {
-                if(!s!!.contains('.')) s += "."
-                display.text = s
-            }
-
-            // TODO: no two consecutive elements are operators
-            R.id.buPlus -> {
-                if(ops.contains(s!!.last())){
-                    s?.dropLast(1)
-                    s += "+"
-                }
-                display.text = s
-            }
-            R.id.buMinus -> {
-                if(ops.contains(s!!.last())){
-                    s?.dropLast(1)
-                    s += "-"
-                }
-                display.text = s
-            }
-            R.id.buMultiply -> {
-                if(ops.contains(s!!.last())){
-                    s?.dropLast(1)
-                    s += "*"
-                }
-                display.text = s
-            }
-            R.id.buDivide -> {
-                if(ops.contains(s!!.last())){
-                    s?.dropLast(1)
-                    s += "/"
-                }
-                display.text = s
-            }
-
-            R.id.buAC -> {
-                if(s!!.isNotEmpty())
-                    s?.dropLast(1)
-                if(s.isEmpty())
-                    s = "0"
-                display.text = s
-            }
-            R.id.buResult -> {
-                if(ops.contains(s!!.last())) s?.dropLast(1)
-
-                try{
-                    display.text = solve(s!!).toString()
-                }catch (e: Exception){
-                    display.text = "Error"
-                }
-                s = "0"
-            }
-            /// a4tar katkot :D
-        }
+    fun others(){
+        percent = findViewById<Button>(R.id.buPlus)
+        delete = findViewById<Button>(R.id.buPlusMinus)
     }
 
     fun solve(s: String): Double{
 
         var equation: Array<String> = Array(s.length) { i -> "" }
-        var ops: String = "+-*/"
+        // var ops: String = "+-*/"
         var start: Int = 0
         var cnt: Int = 0
 
