@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="LightGray">#D4D4D2</color>
+    <color name="EerieBlack">#1C1C1C</color>
+    <color name="DarkLiver">#505050</color>
+    <color name="VividGamboge">#FF9500</color>
+    // I added my iPhone Calculator icon color scheme :P
+
 </resources>
