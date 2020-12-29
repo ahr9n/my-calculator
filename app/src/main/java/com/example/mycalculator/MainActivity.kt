@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         when(clicked.id){
             R.id.bu0 -> {
                 // TODO: I don't want leading zeroes
-                if(s!![s.length-1] != '0') s += "0"
+                if(s!![s!!.length-1] != '0') s += "0"
                 display.text = s
             }
             R.id.bu1 -> {
