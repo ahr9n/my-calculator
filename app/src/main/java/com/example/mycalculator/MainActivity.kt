@@ -7,20 +7,19 @@ import android.widget.Button
 import android.widget.TextView
 import java.lang.Exception
 
-var s: String ?= null
-
 class MainActivity : AppCompatActivity() {
+    
+    var display: TextView = findViewById(R.id.outText)
+    var s: String = "0"
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        s = "0" // initially
-
-        val display: TextView = findViewById(R.id.outText)
-        display.text = s
+        
+        display.text = s // initially
     }
 
-    fun buttonEvent(view: View?, display: TextView){
+    fun buttonEvent(view: View?){
 
         var ops: String = "+-*/"
         var clicked = view as Button
@@ -105,9 +104,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.buAC -> {
-                if(s!!.isNotEmpty()){
+                if(s!!.isNotEmpty())
                     s?.dropLast(1)
-                }
+                if(s.isEmpty())
+                    s = "0"
                 display.text = s
             }
             R.id.buResult -> {
