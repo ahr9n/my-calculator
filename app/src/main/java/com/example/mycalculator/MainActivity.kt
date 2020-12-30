@@ -101,31 +101,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun operationalButtons(){
-        // TODO: no two consecutive elements are operators
         binding.outText.apply {
             binding.buPlus.setOnClickListener{
                 if(ops.contains(s!!.last()) || s!!.last()=='.')
-                    s?.dropLast(1)
+                    s = s?.dropLast(1)
                 s += "+"
                 this.setText(s)
             }
             binding.buMinus.setOnClickListener{
                 if(ops.contains(s!!.last()) || s!!.last()=='.')
-                    s?.dropLast(1)
+                    s = s?.dropLast(1)
 
                 s += "-"
                 this.setText(s)
             }
             binding.buMultiply.setOnClickListener{
                 if(ops.contains(s!!.last()) || s!!.last()=='.')
-                    s?.dropLast(1)
+                    s = s?.dropLast(1)
 
                 s += "*"
                 this.setText(s)
             }
             binding.buDivide.setOnClickListener{
                 if(ops.contains(s!!.last()) || s!!.last()=='.')
-                    s?.dropLast(1)
+                    s = s?.dropLast(1)
 
                 s += "/"
                 this.setText(s)
