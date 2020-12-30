@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
     private fun numericalButtons(){
         // NumericalButtons()
         binding.outText.apply {
-            binding.bu0.setOnClickListener{ // TODO: I don't want leading zeroes
-                if(s[s?.length-1] != '0') s += "0"
+            binding.bu0.setOnClickListener{
+                if(s.isNotEmpty()) s += "0"
                 this.setText(s)
             }
 
