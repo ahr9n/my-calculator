@@ -2,197 +2,177 @@ package com.example.mycalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import android.util.Log
+import com.example.mycalculator.databinding.ActivityMainBinding
 import java.lang.Exception
 import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
 
-    var s: String = ""
-    val ops: String = "+-*/"
-    lateinit var display: TextView
+    private var s: String = ""
+    private val ops: String = "+-*/"
 
-    lateinit var zero: Button
-    lateinit var one: Button
-    lateinit var two: Button
-    lateinit var three: Button
-    lateinit var four: Button
-    lateinit var five: Button
-    lateinit var six: Button
-    lateinit var seven: Button
-    lateinit var eight: Button
-    lateinit var nine: Button
-    lateinit var dot: Button
-
-    lateinit var res: Button
-    lateinit var divide: Button
-    lateinit var multiply: Button
-    lateinit var minus: Button
-    lateinit var plus: Button
-    lateinit var plusMinus: Button
-
-    lateinit var percent: Button
-    lateinit var delete: Button
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        display = findViewById(R.id.outText)
-        display.text = s // initially
+        binding.outText.setText(s)
 
-        NumericalButtons()
-        OperationButtons()
+        numericalButtons()
+        operationalButtons()
         others()
-
-        // NumericalButtons()
-        zero.setOnClickListener{ // TODO: I don't want leading zeroes
-            if(s!![s!!.length-1] != '0') s += "0"
-            display.text = s
-        }
-        one.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "1"
-            display.text = s
-        }
-        two.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "2"
-            display.text = s
-        }
-        three.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "3"
-            display.text = s
-        }
-        four.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "4"
-            display.text = s
-        }
-        five.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "5"
-            display.text = s
-        }
-        six.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "6"
-            display.text = s
-        }
-        seven.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "7"
-            display.text = s
-        }
-        eight.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "8"
-            display.text = s
-        }
-        nine.setOnClickListener{
-            if(s == "0") s?.dropLast(1)
-            s += "9"
-            display.text = s
-        }
-
-        dot.setOnClickListener{ // TODO: no more than one dot
-            var lst: Int = 0
-            lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
-            if(!s!!.substring(lst, s.length-1).contains('.')) s += "."
-            display.text = s
-        }
-
-        // OperationButtons()
-        // TODO: no two consecutive elements are operators
-        plus.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.')
-                s?.dropLast(1)
-            s += "+"
-            display.text = s
-        }
-        minus.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.')
-                s?.dropLast(1)
-
-            s += "-"
-            display.text = s
-        }
-        multiply.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.')
-                s?.dropLast(1)
-
-            s += "*"
-            display.text = s
-        }
-        divide.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.')
-                s?.dropLast(1)
-
-            s += "/"
-            display.text = s
-        }
-
-        res.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.') s?.dropLast(1)
-
-            try{
-                s = solve(s!!).toString()
-                display.text = s
-            }catch (e: Exception){
-                display.text = "Error"
-            }
-            // s = "0"
-        }
-
-        // others()
-        percent.setOnClickListener{
-            if(ops.contains(s!!.last()) || s!!.last()=='.')
-                s?.dropLast(1)
-
-            s += "/100"
-            display.text = s
-        }
-        delete.setOnClickListener{
-            if(s!!.isNotEmpty())
-                s?.dropLast(1)
-            if(s.isEmpty())
-                s = "0"
-            display.text = s
-        }
 
         // a4tar katkot :D
     }
 
-    fun NumericalButtons(){
-        zero = findViewById(R.id.bu0)
-        one = findViewById(R.id.bu1)
-        two = findViewById(R.id.bu2)
-        three = findViewById(R.id.bu3)
-        four = findViewById(R.id.bu4)
-        five = findViewById(R.id.bu5)
-        six = findViewById(R.id.bu6)
-        seven = findViewById(R.id.bu7)
-        eight = findViewById(R.id.bu8)
-        nine = findViewById(R.id.bu9)
-        dot = findViewById(R.id.buDot)
-    }
-    fun OperationButtons(){
-        res = findViewById<Button>(R.id.buResult)
-        divide = findViewById<Button>(R.id.buDivide)
-        multiply = findViewById<Button>(R.id.buMultiply)
-        minus = findViewById<Button>(R.id.buMinus)
-        plus = findViewById<Button>(R.id.buPlus)
-        plusMinus = findViewById<Button>(R.id.buPlusMinus)
-    }
-    fun others(){
-        percent = findViewById<Button>(R.id.buPercent)
-        delete = findViewById<Button>(R.id.buAC)
+    private fun numericalButtons(){
+        // NumericalButtons()
+        binding.outText.apply {
+            binding.bu0.setOnClickListener{
+                if(s.isNotEmpty()) s += "0"
+                this.setText(s)
+            }
+
+            binding.bu1.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "1"
+                this.setText(s)
+            }
+
+            binding.bu2.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "2"
+                this.setText(s)
+            }
+
+            binding.bu3.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "3"
+                this.setText(s)
+            }
+
+            binding.bu4.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "4"
+                this.setText(s)
+            }
+
+            binding.bu5.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "5"
+                this.setText(s)
+            }
+
+            binding.bu6.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "6"
+                this.setText(s)
+            }
+
+            binding.bu7.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "7"
+                this.setText(s)
+            }
+
+            binding.bu8.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "8"
+                this.setText(s)
+            }
+
+            binding.bu9.setOnClickListener{
+                if(s == "0") s?.dropLast(1)
+                s += "9"
+                this.setText(s)
+            }
+
+            binding.buDot.setOnClickListener{ // TODO: no more than one dot
+                var lst: Int = 0
+                lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
+                if(!s!!.substring(lst, s.length-1).contains('.')) s += "."
+                this.setText(s)
+            }
+        }
     }
 
-    fun solve(s: String): Double{
+    private fun operationalButtons(){
+        binding.outText.apply {
+            binding.buPlus.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.')
+                    s = s?.dropLast(1)
+                s += "+"
+                this.setText(s)
+            }
+            binding.buMinus.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.')
+                    s = s?.dropLast(1)
+
+                s += "-"
+                this.setText(s)
+            }
+            binding.buMultiply.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.')
+                    s = s?.dropLast(1)
+
+                s += "*"
+                this.setText(s)
+            }
+            binding.buDivide.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.')
+                    s = s?.dropLast(1)
+
+                s += "/"
+                this.setText(s)
+            }
+
+            binding.buResult.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.') s?.dropLast(1)
+
+                try{
+                    s = solve(s!!).toString()
+                    this.setText(s)
+                }catch (e: Exception){
+                    this.setText("Error")
+                }
+                // s = "0"
+            }
+        }
+    }
+
+    private fun others(){
+        binding.outText.apply {
+            binding.buPercent.setOnClickListener{
+                if(ops.contains(s!!.last()) || s!!.last()=='.')
+                    s?.dropLast(1)
+
+                s += "/100"
+                this.setText(s)
+            }
+
+            binding.buAC.setOnClickListener{
+                Log.d("Hayssamtest", "MainActivity:others: uAC")
+                when
+                {
+                    s.isNotEmpty() ->
+                    {
+                        s = s.dropLast(1)
+                    }
+                    s.isEmpty() ->
+                    {
+                        s = "0"
+                    }
+                }
+                this.setText(s)
+            }
+        }
+    }
+
+    private fun solve(s: String): Double{
 
         var equation: Array<String> = Array(s.length) { i -> "" }
         // var ops: String = "+-*/"
@@ -231,5 +211,4 @@ class MainActivity : AppCompatActivity() {
 
         return answer
     }
-
 }
