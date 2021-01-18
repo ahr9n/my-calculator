@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import java.lang.Exception
 import kotlin.math.max
+import java.util.*
 import com.example.mycalculator.SolveEquation as SolveEquation
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         dot.setOnClickListener { // TODO: no more than one dot
+            if(s.isNotEmpty() && ops.contains(s.last())) s += "0"
             var lst: Int = 0
             lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
             if (!s.substring(lst, s.length).contains('.')) s += "."
