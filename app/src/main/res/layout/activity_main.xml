@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/outText"
         android:layout_width="match_parent"
         android:layout_height="5dp"
