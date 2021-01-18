@@ -12,7 +12,7 @@
         android:id="@+id/outText"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:layout_marginTop="30pt"
+        android:layout_marginTop="15pt"
         android:layout_weight="1"
         android:background="@color/EerieBlack"
         android:ems="10"
@@ -59,12 +59,12 @@
                 app:cornerRadius="35pt" />
 
             <Button
-                android:id="@+id/buPlusMinus"
+                android:id="@+id/buC"
                 android:layout_width="30pt"
                 android:layout_height="40pt"
                 android:layout_weight="1"
                 android:background="@color/LightGray"
-                android:text="+/-"
+                android:text="C"
                 android:textColor="@color/EerieBlack"
                 android:textSize="24sp"
                 app:backgroundTint="@color/LightGray"
