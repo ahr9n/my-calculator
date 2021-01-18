@@ -6,10 +6,12 @@ import android.widget.Button
 import android.widget.TextView
 import java.lang.Exception
 import kotlin.math.max
+import java.util.*
+import com.example.mycalculator.SolveEquation as SolveEquation
 
 class MainActivity : AppCompatActivity() {
 
-    var s: String = ""
+    var s: String = "0"
     private val ops: String = "+-*/"
     lateinit var display: TextView
 
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 display.text = s
             }
         }
+
         dot.setOnClickListener { // TODO: no more than one dot
             var lst: Int = 0
             lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
@@ -76,14 +79,14 @@ class MainActivity : AppCompatActivity() {
             if (ops.contains(s.last()) || s.last() == '.')
                 s.dropLast(1)
 
-            s += "*"
+            s += "×"
             display.text = s
         }
         divide.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
                 s.dropLast(1)
 
-            s += "/"
+            s += "÷"
             display.text = s
         }
 
@@ -93,10 +96,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 s = solve(s).toString()
                 display.text = s
-            } catch (e: Exception) {
-                display.text = "Error"
-            }
-            // s = "0"
+            } catch (e: Exception) { }
+            s = "0"
         }
 
         // others()
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             if (ops.contains(s.last()) || s.last() == '.')
                 s.dropLast(1)
 
-            s += "/100"
+            s += "÷100"
             display.text = s
         }
         delete.setOnClickListener {
@@ -112,6 +113,10 @@ class MainActivity : AppCompatActivity() {
                 s = s.dropLast(1)
             if (s.isEmpty())
                 s = "0"
+            display.text = s
+        }
+        plusMinus.setOnClickListener{
+            s +=  "×(-1)"
             display.text = s
         }
 
@@ -143,41 +148,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun solve(s: String): Double {
 
-        val equation: Array<String> = Array(s.length) { i -> "" }
-        // var ops: String = "+-*/"
-        var start: Int = 0
-        var cnt: Int = 0
-
-        for (i in s.indices)
-            if (ops.contains(s[i])) {
-                equation[cnt++] = s.substring(start, i)
-                equation[cnt++] = s[i].toString()
-
-                start = i + 1
-            }
-        equation[cnt++] = s.substring(start, s.length - 1)
-
-        var answer: Double = equation[0].toDouble()
-        loop@ for (i in 1..equation.size - 2 step 2)
-            when (equation[i]) {
-                "+" -> {
-                    answer += equation[i + 1].toDouble()
-                }
-                "-" -> {
-                    answer -= equation[i + 1].toDouble()
-                }
-                "/" -> {
-                    answer /= equation[i + 1].toDouble()
-                }
-                "*" -> {
-                    answer *= equation[i + 1].toDouble()
-                }
-                else -> {
-                    break@loop
-                }
-            }
-
-        return answer
     }
 
 }
