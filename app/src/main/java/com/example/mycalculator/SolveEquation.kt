@@ -16,9 +16,9 @@ class SolveEquation {
             var i = 0
             while (i < tokens.length) {
                 when {
-                    tokens[i].isDigit() -> {
+                    (tokens[i].isDigit() || tokens[i] == '.') -> {
                         val num = StringBuffer()
-                        while (i < tokens.length && tokens[i].isDigit() || tokens[i] == '.')
+                        while (i < tokens.length && (tokens[i].isDigit() || tokens[i] == '.'))
                             num.append(tokens[i++])
                         values.push(num.toString().toDouble())
                         i--
