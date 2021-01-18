@@ -7,7 +7,6 @@ class SolveEquation {
     private val opers: String = "+-*/"
     private lateinit var values: Stack<Double>
     private lateinit var ops: Stack<Char>
-    private lateinit var tokens: Array<Char>
 
     private fun getAnswer(tokens: String): Double{
         values.clear()
