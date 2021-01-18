@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import java.lang.Exception
 import kotlin.math.max
-import java.util.*
 import com.example.mycalculator.SolveEquation as SolveEquation
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 1..9) {
             nums[i].setOnClickListener {
-                if (s[0] == '0' && s.length == 1) s.dropLast(1)
+                if (s[0] == '0' && s.length == 1)
+                    s = s.dropLast(1)
                 s += i.toString()
                 display.text = s
             }
@@ -64,46 +65,53 @@ class MainActivity : AppCompatActivity() {
         // TODO: no two consecutive elements are operators
         plus.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
-                s.dropLast(1)
+                s = s.dropLast(1)
             s += "+"
             display.text = s
         }
         minus.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
-                s.dropLast(1)
+                s = s.dropLast(1)
 
             s += "-"
             display.text = s
         }
         multiply.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
-                s.dropLast(1)
+                s = s.dropLast(1)
 
             s += "×"
             display.text = s
         }
         divide.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
-                s.dropLast(1)
+                s = s.dropLast(1)
 
             s += "÷"
             display.text = s
         }
 
         res.setOnClickListener {
-            if (ops.contains(s.last()) || s.last() == '.') s.dropLast(1)
+            if (ops.contains(s.last()) || s.last() == '.')
+                s = s.dropLast(1)
 
             try {
                 s = solve(s).toString()
                 display.text = s
-            } catch (e: Exception) { }
-            s = "0"
+            } catch (e: Exception) {
+                if(e.message == "Error: Cannot divide by zero!") Toast.makeText(
+                    this,
+                    e.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            // s = "0"
         }
 
         // others()
         percent.setOnClickListener {
             if (ops.contains(s.last()) || s.last() == '.')
-                s.dropLast(1)
+                s = s.dropLast(1)
 
             s += "÷100"
             display.text = s
@@ -114,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         }
         delete.setOnClickListener{
             if (s.isNotEmpty())
-            s = s.dropLast(1)
+                s = s.dropLast(1)
             if (s.isEmpty())
                 s = "0"
             display.text = s
