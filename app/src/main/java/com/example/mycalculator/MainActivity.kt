@@ -12,7 +12,7 @@ import com.example.mycalculator.SolveEquation as SolveEquation
 class MainActivity : AppCompatActivity() {
 
     var s: String = "0"
-    private val ops: String = "+-*/"
+    private val ops: String = "+-×÷"
     lateinit var display: TextView
 
     lateinit var nums: Array<Button>
@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var multiply: Button
     lateinit var minus: Button
     lateinit var plus: Button
-    lateinit var plusMinus: Button
 
     lateinit var percent: Button
     lateinit var delete: Button
+    lateinit var allDelete: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         dot.setOnClickListener { // TODO: no more than one dot
             var lst: Int = 0
             lst = max(lst, s.lastIndexOfAny(ops.toCharArray()))
-            if (!s.substring(lst, s.length - 1).contains('.')) s += "."
+            if (!s.substring(lst, s.length).contains('.')) s += "."
             display.text = s
         }
 
@@ -108,15 +108,15 @@ class MainActivity : AppCompatActivity() {
             s += "÷100"
             display.text = s
         }
-        delete.setOnClickListener {
-            if (s.isNotEmpty())
-                s = s.dropLast(1)
-            if (s.isEmpty())
-                s = "0"
+        allDelete.setOnClickListener {
+            s = "0"
             display.text = s
         }
-        plusMinus.setOnClickListener{
-            s +=  "×(-1)"
+        delete.setOnClickListener{
+            if (s.isNotEmpty())
+            s = s.dropLast(1)
+            if (s.isEmpty())
+                s = "0"
             display.text = s
         }
 
@@ -128,7 +128,6 @@ class MainActivity : AppCompatActivity() {
             val id = resources.getIdentifier("bu$it", "id", packageName)
             findViewById<Button>(id)
         }
-
         dot = findViewById(R.id.buDot)
     }
 
@@ -138,16 +137,13 @@ class MainActivity : AppCompatActivity() {
         multiply = findViewById<Button>(R.id.buMultiply)
         minus = findViewById<Button>(R.id.buMinus)
         plus = findViewById<Button>(R.id.buPlus)
-        plusMinus = findViewById<Button>(R.id.buPlusMinus)
     }
 
     private fun others() {
         percent = findViewById<Button>(R.id.buPercent)
-        delete = findViewById<Button>(R.id.buAC)
+        delete = findViewById<Button>(R.id.buC)
+        allDelete = findViewById<Button>(R.id.buAC)
     }
 
-    private fun solve(s: String): Double {
-
-    }
-
+    private fun solve(s: String) = SolveEquation.getAnswer(s)
 }
