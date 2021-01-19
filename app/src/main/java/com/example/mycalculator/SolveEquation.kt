@@ -33,7 +33,7 @@ class SolveEquation {
             }
 
             while (!ops.empty()) values.push(applyOp(ops.pop(), values.pop(), values.pop()))
-            return values.pop()
+            return ("%.4f".format(values.pop())).toDouble()
         }
 
         private fun hasPrecedence(op1: Char, op2: Char): Boolean {
