@@ -9,4 +9,7 @@ Do the math with MyCalculator!
 
 ## Screenshotes:
 
-![image](https://user-images.githubusercontent.com/52632898/103301662-836cb500-4a0a-11eb-80ac-767f0013cc11.png)
+<table>
+    <td align="center"><a href="https://user-images.githubusercontent.com/52632898/105035012-065dba00-5a63-11eb-86fb-56a5635a919e.png"><img src="https://user-images.githubusercontent.com/52632898/105035012-065dba00-5a63-11eb-86fb-56a5635a919e.png"/></td>
+    <td align="center"><a href="https://user-images.githubusercontent.com/52632898/105035017-0958aa80-5a63-11eb-8c38-6c237af3312d.png"><img src="https://user-images.githubusercontent.com/52632898/105035017-0958aa80-5a63-11eb-8c38-6c237af3312d.png"/></td>
+</table>
