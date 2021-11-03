@@ -1,6 +1,6 @@
-# MyCalculator
+# My Calculator
 
-Do the math with MyCalculator!
+Do the math with My Calculator!
 
 ## Features:
 
